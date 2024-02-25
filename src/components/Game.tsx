@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View,ImageBackground  } from 'react-native';
 import { Colors } from '../styles/colors';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import { Coordinate, Direction, GestureEventType } from '../types/types';
@@ -9,6 +9,7 @@ import Food from './Food';
 import { checkEatsFood } from '../utils/checkEatsFood';
 import { randomFoodPosition } from '../utils/randomFoodPosition';
 import Header from './Header';
+import { icons } from '../images';
 
 const SNAKE_INITIAL_POSITION = [{x:5,y:5}];
 const FOOD_INITIAL_POSITION = {x:5,y:20};
@@ -124,6 +125,7 @@ export default function Game(): JSX.Element {
     }
 
     return(
+        <ImageBackground source={icons.background_temp} style={styles.background}>
         <PanGestureHandler onGestureEvent={handleGesture}>
             <SafeAreaView style={styles.container}>
                 <Header isPaused={isPaused} pauseGame={pauseGame} reloadGame = {reloadGame}>
@@ -137,6 +139,7 @@ export default function Game(): JSX.Element {
                 </View>
             </SafeAreaView>
         </PanGestureHandler>
+        </ImageBackground>
     )
 }
 
@@ -144,14 +147,19 @@ export default function Game(): JSX.Element {
 const styles = StyleSheet.create({
     container : {
         flex:1,
-        backgroundColor:Colors.primary,
+      //  backgroundColor:Colors.primary,
+    },
+    background: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center"
     },
     boundries : {
         flex: 1,
         borderColor: Colors.primary,
-        borderWidth:12,
+       // borderWidth:12,
         borderBottomLeftRadius:30,
         borderBottomRightRadius:30,
-        backgroundColor:Colors.background,
+     //   backgroundColor:Colors.background,
     }
 })

@@ -9,7 +9,7 @@ const RootStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false, // Hide the header for all screens
+        headerShown: false,
       }}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Game" component={Game} />

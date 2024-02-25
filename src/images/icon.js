@@ -10,6 +10,9 @@ const leaderboard = require('./leaderboard.png');
 const questions = require('./questions.png');
 const liked = require('./liked.png');
 const sound = require('./sound_on.png');
+const muted = require('./muted.png');
+const background_temp = require('./background_temp.jpg');
+const plain_btn = require('./plain_button.png');
 
 export default {
   pause,
@@ -24,4 +27,7 @@ export default {
   questions,
   liked,
   sound,
+  muted,
+  background_temp,
+  plain_btn,
 };

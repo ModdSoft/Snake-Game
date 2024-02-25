@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Image, Animated, TouchableOpacity } from 'react-native';
 import { icons } from '../images';
 import { useNavigation } from '@react-navigation/native';
@@ -6,29 +6,29 @@ import { useNavigation } from '@react-navigation/native';
 const Home = () => {
     const navigation = useNavigation();
     const logoAnimation = useRef(new Animated.Value(0)).current;
+    const [isSoundMuted, setIsSoundMuted] = useState(false);
 
     useEffect(() => {
         Animated.timing(logoAnimation, {
             toValue: 1,
-            duration: 1000, // Adjust the duration as needed
+            duration: 1000,
             useNativeDriver: true
         }).start();
     }, []);
 
     const handleSoundPress = () => {
-        // Handle sound button press action here
-        console.log('Sound button pressed');
+        // Toggle sound state
+        setIsSoundMuted(prevState => !prevState);
     };
 
     const handlePlayPress = () => {
-        // Navigate to the Game screen when play button is pressed
         navigation.navigate('Game');
     };
 
     return (
         <View style={{ flex: 1 }}>
             <TouchableOpacity style={{ position: 'absolute', top: 20, right: 20, zIndex: 1 }} onPress={handleSoundPress}>
-                <Image style={{ height: 70, width: 70 }} source={icons.sound} />
+                <Image style={{ height: 70, width: 70 }} source={isSoundMuted ? icons.muted : icons.sound} />
             </TouchableOpacity>
             <Image style={{ width: '100%', height: '100%', position: 'absolute' }} source={icons.home_background} />
             <View style={{ flex: 1, alignItems: 'center', marginTop: 90 }}>
