@@ -33,13 +33,37 @@ export default function Game(): JSX.Element {
         }
     }, [snake,isGameOver,isPaused])
 
+    const checkSnakeCollision = (head: Coordinate, snake: Coordinate[]) => {
+        for (let i = 1; i < snake.length; i++) {
+            if (head.x === snake[i].x && head.y === snake[i].y) {
+                return true;
+            }
+        }
+        return false;
+    };    
+
     const moveSnake = () => {
         const snakeHead = snake[0];
         const newHead = {...snakeHead}
 
-        if(checkGameOver(snakeHead,GAME_BOUNDS)){
-            setIsGameOver((prev) => !prev);
+        if (checkSnakeCollision(newHead, snake)) {
+            setIsGameOver(true);
             return;
+        }
+
+        if (checkGameOver(snakeHead, GAME_BOUNDS)) {
+            if (snakeHead.x === GAME_BOUNDS.xMin - 1) {
+                newHead.x = GAME_BOUNDS.xMax;
+            } else if (snakeHead.x === GAME_BOUNDS.xMax + 1) {
+                newHead.x = GAME_BOUNDS.xMin;
+            } else if (snakeHead.y === GAME_BOUNDS.yMin - 1) {
+                newHead.y = GAME_BOUNDS.yMax;
+            } else if (snakeHead.y === GAME_BOUNDS.yMax + 1) {
+                newHead.y = GAME_BOUNDS.yMin;
+            } else {
+                setIsGameOver(true);
+                return;
+            }
         }
         switch(direction){
             case Direction.Up:
