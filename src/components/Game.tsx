@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, View,ImageBackground  } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ImageBackground, Modal, TouchableOpacity, Image, BackHandler } from 'react-native';
 import { Colors } from '../styles/colors';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import { Coordinate, Direction, GestureEventType } from '../types/types';
@@ -24,8 +24,14 @@ export default function Game(): JSX.Element {
     const [isGameOver,setIsGameOver] = React.useState<boolean>(false);
     const [isPaused, setIsPaused] = React.useState<boolean>(false);
     const [score, setScore] = React.useState<number>(0);
+    const [showModal, setShowModal] = React.useState<boolean>(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPressed);
+        return () => backHandler.remove();
+    }, []);
+
+    useEffect(() => {
         if(!isGameOver){
             const intervalId = setInterval(() => {
                !isPaused && moveSnake();
@@ -124,6 +130,22 @@ export default function Game(): JSX.Element {
         setIsPaused(false);
     }
 
+    const handleBackPressed = () => {
+        setIsPaused(true);
+        setShowModal(true);
+        return true;
+    }
+
+    const handleModalClose = () => {
+        setShowModal(false);
+        setIsPaused(false); 
+    }
+
+    const handleExitGame = () => {
+        setShowModal(false); 
+        BackHandler.exitApp(); 
+    }
+
     return(
         <ImageBackground source={icons.background_temp} style={styles.background}>
         <PanGestureHandler onGestureEvent={handleGesture}>
@@ -139,10 +161,20 @@ export default function Game(): JSX.Element {
                 </View>
             </SafeAreaView>
         </PanGestureHandler>
+        <Modal visible={showModal} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+        <Image source={icons.exit_menu} style={styles.modalImage} />
+            <TouchableOpacity onPress={handleExitGame} style={styles.modaltickButton}>
+            <View style={styles.buttonBackground}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleModalClose} style={styles.modalcancelButton}>
+            <View style={styles.buttonBackground}/>
+            </TouchableOpacity>
+          </View>
+        </Modal>
         </ImageBackground>
     )
 }
-
 
 const styles = StyleSheet.create({
     container : {
@@ -161,5 +193,42 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius:30,
         borderBottomRightRadius:30,
      //   backgroundColor:Colors.background,
-    }
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      modalImage: {
+        width: 300,
+        height: 300,
+      },
+      closeButton: {
+        position: 'absolute',
+        top: 20,
+        right: 20,
+      },
+      closeIcon: {
+        width: 30,
+        height: 30,
+      },
+      modaltickButton: {
+        position: "absolute",
+        top: '61%',
+        left: '30%',
+        width: 55,
+      },
+      modalcancelButton: {
+        position: "absolute",
+        top: '61%',
+        left: '57%',
+        width:55,
+      },
+      buttonBackground: {
+        backgroundColor: 'transparent',
+        padding: 18,
+        borderRadius: 5,
+      },
 })
+

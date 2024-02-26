@@ -1,4 +1,5 @@
-import { TouchableOpacity, StyleSheet, View, Image,Text } from "react-native";
+import React, { useState } from "react";
+import { TouchableOpacity, StyleSheet, View, Image, Text, Modal, TouchableWithoutFeedback } from "react-native";
 import { Colors } from "../styles/colors";
 import { icons } from "../images";
 
@@ -15,9 +16,28 @@ export default function Header({
   pauseGame,
   isPaused,
 }: HeaderProps): JSX.Element {
+  const [isMenuVisible, setMenuVisible] = useState(false);
+
+  const openMenu = () => {
+    if (!isPaused) {
+      pauseGame();
+    }
+    setMenuVisible(true);
+  };
+
+  const handleReloadGame = () => {
+    reloadGame();
+    setMenuVisible(false);
+  };
+
+  const handleContinueGame = () => {
+    setMenuVisible(false);
+    pauseGame();
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={reloadGame}>
+      <TouchableOpacity onPress={openMenu}>
         <Image source={icons.reload} style={styles.icon} />
       </TouchableOpacity>
       
@@ -26,10 +46,21 @@ export default function Header({
         <Text style={styles.scoreText}>{children}</Text>
       </View>
       
-
       <TouchableOpacity onPress={pauseGame}>
-        <Image source={isPaused ? icons.muted : icons.pause} style={styles.icon} />
+        <Image source={isPaused ? icons.resume_btn : icons.pause} style={styles.icon} />
       </TouchableOpacity>
+
+      <Modal visible={isMenuVisible} animationType="fade" transparent={true}>
+          <View style={styles.modalContainer}>
+            <Image source={icons.reset_menu} style={styles.menuImage} />
+            <TouchableOpacity onPress={handleReloadGame} style={styles.resetButton}>
+            <View style={styles.buttonBackground}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleContinueGame} style={styles.continueButton}>
+            <View style={styles.buttonBackground}/>
+            </TouchableOpacity>
+          </View>
+      </Modal>
     </View>
   );
 }
@@ -40,35 +71,62 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
- //   borderColor: Colors.primary,
- //   borderWidth: 12,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     borderBottomWidth: 0,
     padding: 15,
- //   backgroundColor: Colors.background,
   },
   icon: {
-    marginTop:45,
+    marginTop: 45,
     height: 75,
     width: 75,
   },
   scoreContainer: {
     position: 'relative',
-    marginTop:25,
+    marginTop: 25,
   },
   scoreImage: {
     height: 60,
     width: 120,
-    
   },
   scoreText: {
-    marginTop:25,
+    marginTop: 25,
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: [{ translateX: -13 }, { translateY: -13 }],
     color: Colors.primary, 
     fontSize: 20, 
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  menuImage: {
+    width: 300,
+    height: 300,
+  },
+  resetButton: {
+    position: "absolute",
+    top: '61%',
+    left: '30%',
+    width: 55,
+  },
+  continueButton: {
+    position: "absolute",
+    top: '61%',
+    left: '57%',
+    width:55,
+  },
+  buttonIcon: {
+    width: 50,
+    height: 50,
+  },
+  buttonBackground: {
+    backgroundColor: 'transparent',
+    padding: 18,
+    borderRadius: 5,
   },
 });

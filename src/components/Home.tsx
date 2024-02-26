@@ -17,12 +17,17 @@ const Home = () => {
     }, []);
 
     const handleSoundPress = () => {
-        // Toggle sound state
         setIsSoundMuted(prevState => !prevState);
     };
 
     const handlePlayPress = () => {
         navigation.navigate('Game');
+    };
+    const handleLeaderBoardPress = () => {
+    };
+    const handlequestionPress = () => {
+    };
+    const handleLikedPress = () => {
     };
 
     return (
@@ -62,9 +67,15 @@ const Home = () => {
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
-                <Image style={{ height: 70, width: 70 }} source={icons.leaderboard} />
+                <TouchableOpacity onPress={handleLeaderBoardPress}>
+                  <Image style={{ height: 70, width: 70 }} source={icons.leaderboard} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handlequestionPress}>
                 <Image style={{ height: 70, width: 70 }} source={icons.questions} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleLikedPress}>
                 <Image style={{ height: 70, width: 70 }} source={icons.liked} />
+                </TouchableOpacity>
             </View>
         </View>
     );

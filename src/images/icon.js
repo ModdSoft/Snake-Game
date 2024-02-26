@@ -13,6 +13,12 @@ const sound = require('./sound_on.png');
 const muted = require('./muted.png');
 const background_temp = require('./background_temp.jpg');
 const plain_btn = require('./plain_button.png');
+const cancel = require('./cancel.png');
+const home = require('./home.png');
+const main_menu = require('./main_menu.png');
+const reset_menu = require('./reset_menu.png');
+const exit_menu = require('./exit_menu.png');
+const resume_btn = require('./resume_btn.png');
 
 export default {
   pause,
@@ -30,4 +36,10 @@ export default {
   muted,
   background_temp,
   plain_btn,
+  cancel,
+  home,
+  main_menu,
+  reset_menu,
+  exit_menu,
+  resume_btn,
 };
