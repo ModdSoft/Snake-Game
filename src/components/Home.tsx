@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Image, Animated, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import { View, Image, Animated, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { icons } from '../images';
 import { useNavigation } from '@react-navigation/native';
 import icon from '../images/icon';
+import Sound from 'react-native-sound';
+import sounds from '../sounds';
 
 const Home = () => {
     const navigation = useNavigation();
@@ -10,6 +12,44 @@ const Home = () => {
     const [isSoundMuted, setIsSoundMuted] = useState(false);
     const [showRulesModal, setShowRulesModal] = useState(false);
     const [showLeaderboardModal, setShowLeaderboardModal] = useState(false);
+    const backgroundSound = useRef<Sound | null>(null);
+
+    const tapSound = new Sound(sounds.button_tap, Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+            console.log('Failed to load the sound', error);
+            return;
+        }
+    });
+
+    useEffect(() => {
+        backgroundSound.current = new Sound(sounds.home_bg, Sound.MAIN_BUNDLE, (error) => {
+            if (error) {
+                console.log('Failed to load the sound', error);
+                return;
+            }
+            if (!isSoundMuted) {
+                //NOT WORKING!!
+                backgroundSound.current?.setNumberOfLoops(-1);
+                backgroundSound.current?.play();
+            }
+        });
+        return () => {
+            if (backgroundSound.current) {
+                backgroundSound.current.stop();
+                backgroundSound.current.release(); 
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (backgroundSound.current) {
+            if (isSoundMuted) {
+                backgroundSound.current.pause();
+            } else {
+                backgroundSound.current.play(); 
+            }
+        }
+    }, [isSoundMuted]);
 
     useEffect(() => {
         Animated.timing(logoAnimation, {
@@ -21,21 +61,36 @@ const Home = () => {
 
     const handleSoundPress = () => {
         setIsSoundMuted(prevState => !prevState);
+        if (!isSoundMuted) {
+            tapSound.play(); 
+        }
     };
 
     const handlePlayPress = () => {
+        if (!isSoundMuted) {
+            tapSound.play(); 
+        }
         navigation.navigate('Game');
     };
 
     const handleLeaderBoardPress = () => {
+        if (!isSoundMuted) {
+            tapSound.play(); 
+        }
         setShowLeaderboardModal(true);
     };
 
     const handleQuestionPress = () => {
+        if (!isSoundMuted) {
+            tapSound.play(); 
+        }
         setShowRulesModal(true);
     };
 
     const handleLikedPress = () => {
+        if (!isSoundMuted) {
+            tapSound.play(); 
+        }
         // Handle liked press
     };
 
@@ -103,7 +158,6 @@ const Home = () => {
                 <TouchableOpacity style={styles.modalOverlay} onPress={() => setShowRulesModal(false)}>
                     <View style={styles.modalContainer}>
                         <TouchableOpacity style={styles.modalContent} activeOpacity={1} onPress={() => setShowRulesModal(false)}>
-                            {/* Your rules content goes here */}
                             <Image source={icon.rules_modal} style={{ height: 300, width: 350 }}/>
                         </TouchableOpacity>
                     </View>
