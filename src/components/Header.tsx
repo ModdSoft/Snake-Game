@@ -1,16 +1,15 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
   Image,
-  Text,
   Modal,
-  TouchableWithoutFeedback,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import {Colors} from '../styles/colors';
-import {icons} from '../images';
-import Sound from 'react-native-sound';
+import { tapSound } from '../..';
+import { icons } from '../images';
+import { Colors } from '../styles/colors';
 
 interface HeaderProps {
   reloadGame: () => void;
@@ -28,16 +27,6 @@ export default function Header({
   isSoundMuted,
 }: HeaderProps): JSX.Element {
   const [isMenuVisible, setMenuVisible] = useState(false);
-  const tapSound = new Sound(
-    'button_tap_sound.mp3',
-    Sound.MAIN_BUNDLE,
-    error => {
-      if (error) {
-        console.log('Failed to load the sound', error);
-        return;
-      }
-    },
-  );
 
   const playTapSound = () => {
     if (!isSoundMuted) {

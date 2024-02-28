@@ -1,28 +1,3 @@
-import React, {useCallback, useEffect, useRef} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  Modal,
-  TouchableOpacity,
-  Image,
-  BackHandler,
-  AppStateStatus,
-  AppState,
-} from 'react-native';
-import {Colors} from '../styles/colors';
-import {PanGestureHandler} from 'react-native-gesture-handler';
-import {Coordinate, Direction, GestureEventType} from '../types/types';
-import Snake from './Snake';
-import {checkGameOver} from '../utils/checkGameOver';
-import Food from './Food';
-import {checkEatsFood} from '../utils/checkEatsFood';
-import {randomFoodPosition} from '../utils/randomFoodPosition';
-import Header from './Header';
-import {icons} from '../images';
-import Sound from 'react-native-sound';
 import {
   ParamListBase,
   RouteProp,
@@ -30,7 +5,33 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useCallback, useEffect, useRef } from 'react';
+import {
+  AppState,
+  AppStateStatus,
+  BackHandler,
+  Image,
+  ImageBackground,
+  Modal,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import Sound from 'react-native-sound';
+import { gameBackgroundSound, tapSound } from '../..';
+import { icons } from '../images';
+import { Colors } from '../styles/colors';
+import { Coordinate, Direction, GestureEventType } from '../types/types';
+import { checkEatsFood } from '../utils/checkEatsFood';
+import { checkGameOver } from '../utils/checkGameOver';
+import { randomFoodPosition } from '../utils/randomFoodPosition';
+import Food from './Food';
+import Header from './Header';
+import Snake from './Snake';
 
 const SNAKE_INITIAL_POSITION = [{x: 5, y: 5}];
 const FOOD_INITIAL_POSITION = {x: 5, y: 20};
@@ -57,38 +58,21 @@ export default function Game(): JSX.Element {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
   const isSoundMuted =
     useRoute<RouteProp<ParamList, 'data'>>()?.params?.isSoundMuted;
-  const tapSound = new Sound(
-    'button_tap_sound.mp3',
-    Sound.MAIN_BUNDLE,
-    error => {
-      if (error) {
-        console.log('Failed to load the sound', error);
-        return;
-      }
-    },
-  );
+  Sound.setCategory('Playback');
   const backgroundSound = useRef<Sound | null>();
 
   useEffect(() => {
-    backgroundSound!.current = new Sound(
-      'background_game.mp3',
-      Sound.MAIN_BUNDLE,
-      error => {
-        if (error) {
-          console.log('failed to load sound', error);
-          return;
+    backgroundSound!.current = gameBackgroundSound;
+
+    if (!isSoundMuted) {
+      backgroundSound.current!.setVolume(0.15);
+      backgroundSound.current!.setNumberOfLoops(-1);
+      backgroundSound.current!.play(success => {
+        if (!success) {
+          console.log('playback failed due to audio decoding errors');
         }
-        if (!isSoundMuted) {
-          backgroundSound.current!.setVolume(0.15);
-          backgroundSound.current!.setNumberOfLoops(-1);
-          backgroundSound.current!.play(success => {
-            if (!success) {
-              console.log('playback failed due to audio decoding errors');
-            }
-          });
-        }
-      },
-    );
+      });
+    }
   }, []);
 
   useFocusEffect(

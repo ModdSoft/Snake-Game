@@ -1,25 +1,26 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {
-  View,
-  Image,
-  Animated,
-  TouchableOpacity,
-  Modal,
-  StyleSheet,
-  BackHandler,
-  Linking,
-  AppStateStatus,
-  AppState,
-} from 'react-native';
-import {icons} from '../images';
 import {
   ParamListBase,
   useFocusEffect,
   useNavigation,
 } from '@react-navigation/native';
-import icon from '../images/icon';
-import Sound from 'react-native-sound';
 import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {
+  Animated,
+  AppState,
+  AppStateStatus,
+  BackHandler,
+  Image,
+  Linking,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Sound from 'react-native-sound';
+import {homeBackgroundSound, tapSound} from '../..';
+import {icons} from '../images';
+import icon from '../images/icon';
 
 const Home = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
@@ -28,39 +29,21 @@ const Home = () => {
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [showLeaderboardModal, setShowLeaderboardModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  Sound.setCategory('Playback');
   const backgroundSound = useRef<Sound | null>();
 
-  const tapSound = new Sound(
-    'button_tap_sound.mp3',
-    Sound.MAIN_BUNDLE,
-    error => {
-      if (error) {
-        console.log('Failed to load the tap sound', error);
-        return;
-      }
-    },
-  );
-
   useEffect(() => {
-    backgroundSound!.current = new Sound(
-      'background_home.mp3',
-      Sound.MAIN_BUNDLE,
-      error => {
-        if (error) {
-          console.log('failed to load sound', error);
-          return;
+    backgroundSound!.current = homeBackgroundSound;
+
+    if (!isSoundMuted) {
+      backgroundSound.current!.setVolume(0.15);
+      backgroundSound.current!.setNumberOfLoops(-1);
+      backgroundSound.current!.play(success => {
+        if (!success) {
+          console.log('playback failed due to audio decoding errors');
         }
-        if (!isSoundMuted) {
-          backgroundSound.current!.setVolume(0.15);
-          backgroundSound.current!.setNumberOfLoops(-1);
-          backgroundSound.current!.play(success => {
-            if (!success) {
-              console.log('playback failed due to audio decoding errors');
-            }
-          });
-        }
-      },
-    );
+      });
+    }
   }, []);
 
   useFocusEffect(
@@ -131,7 +114,7 @@ const Home = () => {
   const handleSoundPress = () => {
     setIsSoundMuted(prevState => !prevState);
     if (!isSoundMuted) {
-      tapSound.play();
+      tapSound?.play();
     }
   };
 
