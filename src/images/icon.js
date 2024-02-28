@@ -21,6 +21,7 @@ const exit_menu = require('./exit_menu.png');
 const resume_btn = require('./resume_btn.png');
 const rules_modal = require('./rules_modal.png');
 const leaderboard_menu = require('./leaderboard_menu.png');
+const game_over_menu = require('./game_over_menu.png');
 
 export default {
   pause,
@@ -46,4 +47,5 @@ export default {
   resume_btn,
   rules_modal,
   leaderboard_menu,
+  game_over_menu,
 };

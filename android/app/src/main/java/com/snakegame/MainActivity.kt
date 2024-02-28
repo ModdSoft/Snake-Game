@@ -1,4 +1,4 @@
-package com.snakegame
+package com.moddsoft.snakegame
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

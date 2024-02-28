@@ -1,4 +1,4 @@
-package com.snakegame
+package com.moddsoft.snakegame
 
 import android.app.Application
 import com.facebook.react.PackageList
