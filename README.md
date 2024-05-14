@@ -1,79 +1,104 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# Snake Game
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+Welcome to Snake Game! This classic arcade-style game brings back the nostalgia of the vintage snake game, where you control a growing snake as it maneuvers around the screen eating apples and avoiding collisions with itself.
 
-## Step 1: Start the Metro Server
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## How To Play
 
-To start Metro, run the following command from the _root_ of your React Native project:
+**Controls:** 
+- Use the arrow keys (up, down, left, right) to control the direction of the snake's movement.
+
+**Objective:** 
+- Guide the snake to eat as many apples as possible without colliding with itself or the walls.
+- Each time the snake eats an apple, it grows longer.
+
+**Game Over:** 
+- The game ends if the snake collides with itself or the walls.
+- Your score will be displayed at the end of the game.
+
+## Features
+
+**Scoring:** 
+- Each apple eaten increases your score.
+- Try to beat your high score with each new game!
+
+**Speed Increase:** 
+- As the snake grows longer or as you progress through the game, the speed of the snake will increase, making the game more challenging.
+
+**Responsive Controls:** 
+- The controls are smooth and responsive, allowing for precise movement of the snake.
+
+**Colorful Graphics:** 
+- Enjoy vibrant graphics and animations that bring the game to life.
+
+**Sound Effects:** 
+- Immerse yourself in the game with engaging sound effects.
+
+## Technology Used
+
+**React Native:** Leveraging React Native for building cross-platform mobile applications with native performance and user experience.
+
+**TypeScript:** Enhancing code quality, readability, and maintainability with TypeScript's static typing features.
+
+**PlayStore:** Published on the Google Play Store for easy access and distribution to Android users worldwide.
+
+
+## Installation
+
+To run this project locally, follow these steps:
+
+- Clone the project
 
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+  git clone https://github.com/ModdSoft/Snake-Game.git
 ```
 
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
+- Go to the project directory
 
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+  cd snake-game
 ```
 
-### For iOS
+- Install dependencies
 
 ```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+  npm install
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+- Start the app
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+```bash
+  npm run android
+```
 
-## Step 3: Modifying your App
 
-Now that you have successfully run the app, let's modify it.
+## Screenshots
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+![App Screenshot](https://i.postimg.cc/jjGMRXRT/rattler-rush.png)
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
-## Congratulations! :tada:
+## Contributing
 
-You've successfully run and modified your React Native App. :partying_face:
+Contributions and feedback are always welcome! If you find any bugs, have suggestions for improvements, or would like to contribute new features, please feel free to open an issue or submit a pull request. Here's how you can contribute:
 
-### Now what?
+Bug Reports: Report any bugs you encounter by opening an issue.
+- Please provide detailed information about the issue and steps to reproduce it.
+- Feature Requests: Have an idea for a new feature? Share it by opening an issue and describing the feature you'd like to see.
+- Pull Requests: Submit a pull request with your proposed changes. Make sure to follow the contribution guidelines and explain the purpose of your changes.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
 
-# Troubleshooting
+## Authors
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- [@dhyeymodi2001](https://github.com/dhyeymodi2001)
+- [@manavparikh19](https://github.com/manavparikh19)
 
-# Learn More
 
-To learn more about React Native, take a look at the following resources:
+## Contact
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+For inquiries or collaborations, you can reach me via email at:
+- moddsoftdevelopers@gmail.com
+- dhyeymodi21@gmail.com 
+- manavparikh19@gmail.com.
+
+Thank you for visiting! 🚀
